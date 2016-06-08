@@ -414,8 +414,10 @@ public class BarLineChartTouchListener extends ChartTouchListener<BarLineChartBa
         Highlight h = mChart.getHighlightByTouchPoint(e.getX(), e.getY());
 
         if (h != null && !h.equalTo(mLastHighlighted)) {
-            mLastHighlighted = h;
-            mChart.highlightValue(h, true);
+            if (!Float.isNaN(h.getValue()) || !Double.isNaN(h.getValue())) {
+                mLastHighlighted = h;
+                mChart.highlightValue(h, true);
+            }
         }
     }
 

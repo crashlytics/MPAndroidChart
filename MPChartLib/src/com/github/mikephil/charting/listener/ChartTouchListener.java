@@ -1,5 +1,7 @@
 package com.github.mikephil.charting.listener;
 
+import android.renderscript.Double2;
+import android.renderscript.Float2;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -117,12 +119,16 @@ public abstract class ChartTouchListener<T extends Chart<?>> extends GestureDete
      */
     protected void performHighlight(Highlight h, MotionEvent e) {
 
-        if (h == null || h.equalTo(mLastHighlighted)) {
+        if (h == null) {
             mChart.highlightValue(null, true);
             mLastHighlighted = null;
-        } else {
-            mChart.highlightValue(h, true);
-            mLastHighlighted = h;
+        }
+        else {
+            if (!Float.isNaN(h.getValue())
+                    || !Double.isNaN(h.getValue())) {
+                mChart.highlightValue(h, true);
+                mLastHighlighted = h;
+            }
         }
     }
 
