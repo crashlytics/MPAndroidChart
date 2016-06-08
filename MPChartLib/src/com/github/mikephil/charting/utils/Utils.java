@@ -606,15 +606,16 @@ public abstract class Utils {
 
     public static void drawXAxisValue(Canvas c, String text, float x, float y,
                                       Paint paint,
-                                      PointF anchor, float angleDegrees) {
+                                      PointF anchor, float angleDegrees, float normalizedLineHeight) {
 
         float drawOffsetX = 0.f;
         float drawOffsetY = 0.f;
 
-        final float lineHeight = paint.getFontMetrics(mFontMetricsBuffer);
         paint.getTextBounds(text, 0, text.length(), mDrawTextRectBuffer);
 
-        // Android sometimes has pre-padding
+
+
+            // Android sometimes has pre-padding
         drawOffsetX -= mDrawTextRectBuffer.left;
 
         // Android does not snap the bounds to line boundaries,
@@ -627,6 +628,8 @@ public abstract class Utils {
         paint.setTextAlign(Paint.Align.LEFT);
 
         if (angleDegrees != 0.f) {
+            float lineHeight = mDrawTextRectBuffer.height();
+            drawOffsetY += lineHeight;
 
             // Move the text drawing rect in a way that it always rotates around its center
             drawOffsetX -= mDrawTextRectBuffer.width() * 0.5f;
@@ -654,10 +657,12 @@ public abstract class Utils {
 
             c.restore();
         } else {
+            drawOffsetY += normalizedLineHeight;
+
             if (anchor.x != 0.f || anchor.y != 0.f) {
 
                 drawOffsetX -= mDrawTextRectBuffer.width() * anchor.x;
-                drawOffsetY -= lineHeight * anchor.y;
+                drawOffsetY -= normalizedLineHeight * anchor.y;
             }
 
             drawOffsetX += x;

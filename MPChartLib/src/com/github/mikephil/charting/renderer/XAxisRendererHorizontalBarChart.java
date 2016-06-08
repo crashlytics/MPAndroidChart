@@ -101,6 +101,8 @@ public class XAxisRendererHorizontalBarChart extends XAxisRendererBarChart {
     protected void drawLabels(Canvas c, float pos, PointF anchor) {
 
         final float labelRotationAngleDegrees = mXAxis.getLabelRotationAngle();
+        final float normalizedLineHeight = Utils.calcTextHeight(mAxisLabelPaint, "Q");
+
 
         // pre allocate to save performance (dont allocate in loop)
         float[] position = new float[] {
@@ -125,7 +127,7 @@ public class XAxisRendererHorizontalBarChart extends XAxisRendererBarChart {
             if (mViewPortHandler.isInBoundsY(position[1])) {
 
                 String label = mXAxis.getValues().get(i);
-                drawLabel(c, label, i, pos, position[1], anchor, labelRotationAngleDegrees);
+                drawLabel(c, label, i, pos, position[1], anchor, labelRotationAngleDegrees, normalizedLineHeight);
             }
         }
     }

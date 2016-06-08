@@ -26,6 +26,7 @@ public class XAxisRendererRadarChart extends XAxisRenderer {
             return;
 
         final float labelRotationAngleDegrees = mXAxis.getLabelRotationAngle();
+        final float normalizedLineHeight = Utils.calcTextHeight(mAxisLabelPaint, "Q");
         final PointF drawLabelAnchor = new PointF(0.5f, 0.0f);
 
         mAxisLabelPaint.setTypeface(mXAxis.getTypeface());
@@ -50,7 +51,7 @@ public class XAxisRendererRadarChart extends XAxisRenderer {
                     + mXAxis.mLabelRotatedWidth / 2f, angle);
 
             drawLabel(c, label, i, p.x, p.y - mXAxis.mLabelRotatedHeight / 2.f,
-                    drawLabelAnchor, labelRotationAngleDegrees);
+                    drawLabelAnchor, labelRotationAngleDegrees, normalizedLineHeight);
         }
     }
 
